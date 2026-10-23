@@ -310,11 +310,35 @@ ros2 launch turtle_control system.launch.py
 - **Callback group (Reentrant) + MultiThreadedExecutor**: lets the node answer services and pose messages while an action is still running.
 
 ## Bonus (Rosbag Recording & Playback)
-To record and play back the turtle's square movement:
-- To play the recorded bag:
-  ```bash
-  ros2 bag play final_bonus_bag
+    step 1 (Launch the system): Start the core ROS 2 nodes and the turtlesim simulator:
+    Bash
 
+    ros2 launch turtle_control system.launch.py
+
+    Step 2 (Record the rosbag): In a separate terminal, initiate the recording of the target velocity and pose topics into a designated bag folder:
+    Bash
+
+    ros2 bag record -o final_bonus_bag_2 /turtle1/cmd_vel /turtle1/pose
+
+    Step 3 (Execute the action): Trigger the square drawing action goal to initiate the physical movement of the turtle:
+    Bash
+
+    ros2 action send_goal /draw_square my_interfaces/action/DrawSquare "{side_length: 3.0}"
+
+    Step 4 (Save the recording): Once the turtle completes the square path and comes to a full stop, gracefully terminate the recording process by pressing Ctrl + C in the recording terminal to ensure proper metadata and storage generation (metadata.yaml and .mcap files).
+
+3. Playback Verification:
+To replay the recorded movement and verify the success of the bonus task:
+
+    Reset the simulator environment:
+    Bash
+
+    ros2 service call /reset_turtle std_srvs/srv/Empty
+
+    Play back the recorded bag file:
+    Bash
+
+    ros2 bag play final_bonus_bag_2
 
 ## steps to run the whole task with the bonus
 
