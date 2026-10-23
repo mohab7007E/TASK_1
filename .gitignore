@@ -1,3 +1,7 @@
+src/bags/
+src/my_package/
+src/README.md
+*.zip
 build/
 install/
 log/
